@@ -1,0 +1,109 @@
+basePath: /
+definitions:
+  models.Customer:
+    properties:
+      balance:
+        type: integer
+      id:
+        type: integer
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@merchantbankapi.com
+    name: API Support
+  description: API for merchant and bank transactions.
+  title: Merchant Bank API
+  version: "1.0"
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Logs in a customer using username and password
+      parameters:
+      - description: Customer Login
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/models.Customer'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Login customer
+      tags:
+      - auth
+  /logout:
+    post:
+      description: Logs out the currently logged-in customer
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Logout customer
+      tags:
+      - auth
+  /payment:
+    post:
+      consumes:
+      - application/json
+      description: Allows a logged-in customer to make a payment to a merchant
+      parameters:
+      - description: Payment Request
+        in: body
+        name: payment
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Make a payment
+      tags:
+      - payment
+swagger: "2.0"
